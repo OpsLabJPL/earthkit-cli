@@ -1,0 +1,42 @@
+{
+	"size": 6,
+	"count": 7,
+	"root": {
+		"mode": 2147484141,
+		"mtime": "0001-01-01T00:00:00Z",
+		"_tree": {
+			"emptyfile": {
+				"mode": 420,
+				"mtime": "0001-01-01T00:00:00Z"
+			},
+			"extlink": {
+				"mode": 134218239,
+				"mtime": "0001-01-01T00:00:00Z",
+				"target": "/dev/null"
+			},
+			"link": {
+				"mode": 134218239,
+				"mtime": "0001-01-01T00:00:00Z",
+				"target": "emptyfile"
+			},
+			"subdir": {
+				"mode": 2147484141,
+				"mtime": "0001-01-01T00:00:00Z",
+				"_tree": {
+					"extlink": {
+						"mode": 134218239,
+						"mtime": "0001-01-01T00:00:00Z",
+						"target": "../../tree1"
+					},
+					"file": {
+						"mode": 420,
+						"mtime": "0001-01-01T00:00:00Z",
+						"size": 6,
+						"_digest": "5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03"
+					}
+				}
+			}
+		}
+	},
+	"crtime": "0001-01-01T00:00:00Z"
+}

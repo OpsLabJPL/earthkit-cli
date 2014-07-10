@@ -1,0 +1,13 @@
+docker_path = /usr/bin/docker
+ami = ami-838de9a0
+security_group = sg-2fa9bb43
+aws_access_key = aws_access_key
+aws_secret_key = aws_secret_key
+aws_region = us-gov-west-1
+s3_bucket = earthkit-cli
+s3_key_prefix = .earthkit
+subnet = subnet-76c0b91f
+ec2keyname = ddao
+etcdq_s3_path = bin/ubuntu/etcdq-0.1
+docker_registry = 96.127.35.247:5000
+data_dir = /mnt/data/earthkit

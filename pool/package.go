@@ -3,8 +3,8 @@ package pool
 import (
 	"github.com/opslabjpl/earthkit-cli/config"
 	"github.com/opslabjpl/earthkit-cli/workspace"
-	"github.com/opslabjpl/goamz.git/ec2"
-	"github.com/opslabjpl/goprovision.git"
+	"github.com/opslabjpl/goamz/ec2"
+	"github.com/opslabjpl/goprovision"
 	"net"
 )
 

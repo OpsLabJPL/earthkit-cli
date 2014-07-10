@@ -2,7 +2,7 @@ package s3utils
 
 import (
 	"fmt"
-	"github.com/opslabjpl/goamz.git/s3"
+	"github.com/opslabjpl/goamz/s3"
 	"io"
 	"os"
 )

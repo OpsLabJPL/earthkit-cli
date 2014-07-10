@@ -3,7 +3,7 @@ package config
 import (
 	"flag"
 	"github.com/rakyll/globalconf"
-	"github.com/opslabjpl/goamz.git/aws"
+	"github.com/opslabjpl/goamz/aws"
 	"os"
 	"path"
 	"time"

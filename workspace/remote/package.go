@@ -1,7 +1,7 @@
 package remote
 
 import (
-	"github.com/opslabjpl/goamz.git/s3"
+	"github.com/opslabjpl/goamz/s3"
 	"path"
 )
 

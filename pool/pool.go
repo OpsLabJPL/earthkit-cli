@@ -3,9 +3,9 @@ package pool
 import (
 	"fmt"
 	"github.com/opslabjpl/earthkit-cli/config"
-	"github.com/opslabjpl/goamz.git/ec2"
-	"github.com/opslabjpl/goamz.git/s3"
-	"github.com/opslabjpl/goprovision.git"
+	"github.com/opslabjpl/goamz/ec2"
+	"github.com/opslabjpl/goamz/s3"
+	"github.com/opslabjpl/goprovision"
 	"strings"
 	"time"
 )

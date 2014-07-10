@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 	"github.com/opslabjpl/earthkit-cli/workspace"
-	"github.com/opslabjpl/goamz.git/aws"
+	"github.com/opslabjpl/goamz/aws"
 )
 
 // TODO: make these configurable

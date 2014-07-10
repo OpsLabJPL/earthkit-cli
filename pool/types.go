@@ -2,7 +2,7 @@ package pool
 
 import (
 	"github.com/opslabjpl/earthkit-cli/workspace"
-	"github.com/opslabjpl/goprovision.git"
+	"github.com/opslabjpl/goprovision"
 )
 
 type Pool struct {

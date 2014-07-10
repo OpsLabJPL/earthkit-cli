@@ -10,7 +10,7 @@ import (
 	"github.com/opslabjpl/earthkit-cli/config"
 	"github.com/opslabjpl/earthkit-cli/pool"
 	"github.com/opslabjpl/earthkit-cli/workspace"
-	"github.com/opslabjpl/etcdq.git/etcdq"
+	"github.com/opslabjpl/etcdq/etcdq"
 	// "math/rand"
 	"net/http"
 	// "net/url"

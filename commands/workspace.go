@@ -6,7 +6,7 @@ import (
 	"github.com/opslabjpl/earthkit-cli/fileset"
 	"github.com/opslabjpl/earthkit-cli/workspace"
 	"github.com/opslabjpl/earthkit-cli/workspace/remote"
-	"github.com/opslabjpl/goamz.git/s3"
+	"github.com/opslabjpl/goamz/s3"
 	"io/ioutil"
 	"log"
 	"os"

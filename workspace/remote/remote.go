@@ -3,7 +3,7 @@ package remote
 import (
 	"fmt"
 	"github.com/opslabjpl/earthkit-cli/fileset"
-	"github.com/opslabjpl/earthkit-cli/s3utils"
+	// "github.com/opslabjpl/earthkit-cli/s3utils"
 	"github.com/opslabjpl/goamz/s3"
 	"github.com/opslabjpl/gotx/tx"
 	txFile "github.com/opslabjpl/gotx/tx/file"
@@ -51,6 +51,18 @@ func (this *Remote) Filesets() ([]s3.Key, error) {
 	return keys, err
 }
 
+func (this *Remote) DigestMap() (*map[string]bool, error) {
+	var digestMap map[string]bool = make(map[string]bool)
+
+	prefix := this.FilesPrefix();
+	results, errs := this.bucket.ListAllAsync(prefix)
+	for key := range results {
+		digestMap[key.Key] = true
+	}	
+	err := <-errs
+	return &digestMap, err
+}
+
 func (this *Remote) LatestFileset() (filesetName string, err error) {
 	s3Keys, err := this.Filesets()
 	if err != nil {
@@ -73,11 +85,15 @@ func (this *Remote) Upload(files map[string]string) {
 	cTxDone := txMgr.NewTxChan(16)
 
 	prefix := this.FilesPrefix()
+
+	digestMap, _ := this.DigestMap()
+
 	for fileName, digest := range files {
 		key := path.Join(prefix, digest)
 
 		// No need to upload if the object is already there
-		if s3utils.S3ObjectExist(this.bucket, key) {
+		//if s3utils.S3ObjectExist(this.bucket, key) {
+		if (*digestMap)[key] {	
 			println("Skipping", key)
 			continue
 		}

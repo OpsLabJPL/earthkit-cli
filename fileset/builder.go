@@ -80,6 +80,7 @@ func (bldr *builder) visitRegularFile(path string, info os.FileInfo) (entry *Ent
 		if cachedEntry != nil && cachedEntry.ModTime == info.ModTime() {
 			digest = bldr.CachedEntryMap[relPath].Digest
 		} else {
+			println("Not using cache")
 			var fp *os.File
 			fp, err = os.Open(path)
 			if err != nil {

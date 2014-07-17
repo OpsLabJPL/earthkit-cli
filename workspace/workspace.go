@@ -75,21 +75,12 @@ func (workspace *Workspace) Remote() *remote.Remote {
 
 // Handles push command for the given workspace and fileset
 func (workspace *Workspace) Push(filesetName string, comment string, patterns fileset.FileSetFilter) {
-	cache_exists := true
 	var cachedFileSet *fileset.FileSet
-	mdata, err := ioutil.ReadFile(filepath.Join(workspace.FilesetsDir(), "_current"))
-	if err != nil {
-		cache_exists = false
-		// It's only a "real" error if the fileset exists and we couldn't load it
-		if !os.IsNotExist(err) {
-			log.Fatal(err)
-		}
-	}
-	if cache_exists {
-		cachedFileSet, err = fileset.LoadGzJson(mdata)
-		if err != nil {
-			log.Fatal(err)
-		}
+
+	currentFilesetPath, err := workspace.currentFilesetPath()
+
+	if err == nil {
+		cachedFileSet = loadFileSet(currentFilesetPath)
 	}
 
 	baseDir := workspace.LocalRootDir
@@ -141,19 +132,18 @@ func (workspace *Workspace) Pull(filesetName string, patterns fileset.FileSetFil
 	cache_exists := true
 	var cachedFileSet *fileset.FileSet
 	var cachedEntryMap fileset.EntryMap
-	data, err := ioutil.ReadFile(filepath.Join(workspace.FilesetsDir(), "_current"))
+
+	var data []byte
+
+
+
+	currentFilesetPath, err := workspace.currentFilesetPath()
 	if err != nil {
 		cache_exists = false
-		// It's only a "real" error if the fileset exists and we couldn't load it
-		if !os.IsNotExist(err) {
-			log.Fatal(err)
-		}
 	}
+
 	if cache_exists {
-		cachedFileSet, err = fileset.LoadGzJson(data)
-		if err != nil {
-			log.Fatal(err)
-		}
+		cachedFileSet = loadFileSet(currentFilesetPath)
 		cachedEntryMap = cachedFileSet.Root.Flatten()
 		// See what changes have been made by the user to the current local
 		// workspace and warn user that they will be deleted and/or modified
@@ -444,9 +434,9 @@ func (workspace *Workspace) SetUpDiscoveryUrl(isClone bool) {
 }
 
 func (workspace *Workspace) GetCurrentFileSetName() string {
-	linkname := filepath.Join(workspace.FilesetsDir(), "_current")
-	mpath, _ := os.Readlink(linkname)
-	return fileset.FileSetNameFromFile(mpath)
+	currentFile := filepath.Join(workspace.FilesetsDir(), "_current")
+	currentFileset, _ := ioutil.ReadFile(currentFile)
+	return fileset.FileSetNameFromFile(string(currentFileset))
 }
 
 // Write the fileset data out to the to the fileset cache directory using the given filename.
@@ -465,12 +455,10 @@ func (workspace *Workspace) cacheFileset(filename string, data []byte) error {
 // Given a path to a fileset, creates a symbolic link called "_current" that points to the fileset.
 // The argument 'filename' is expected to be the name on disk of the fileset (e.g. "fileset1.json.gz").
 func (workspace *Workspace) setCurrentFileset(filename string) error {
-	linkname := filepath.Join(workspace.FilesetsDir(), "_current")
-	os.Remove(linkname)
-	err := os.Symlink(filename, linkname)
-	if err != nil {
-		log.Fatal(err)
-	}
+	currentFile := filepath.Join(workspace.FilesetsDir(), "_current")
+    err := ioutil.WriteFile(currentFile, []byte(filename), 0644)
+    if err != nil { panic(err) }
+
 	return err
 }
 
@@ -569,4 +557,28 @@ func (workspace *Workspace) cleanCache(cacheLimit int64) {
 
 func (workspace *Workspace) cacheDir() string {
 	return filepath.Join(workspace.LocalRootDir, EarthkitDir, "cache")
+}
+
+func (workspace *Workspace) currentFilesetPath()(string, error) {
+	currentFileset, err := ioutil.ReadFile(filepath.Join(workspace.FilesetsDir(), "_current"))
+	if err != nil {
+		return "", err
+	}
+
+	return filepath.Join(workspace.FilesetsDir(), string(currentFileset)), nil
+}
+
+func loadFileSet(fileSetPath string) *fileset.FileSet{
+	var fileSet *fileset.FileSet
+	mdata, err := ioutil.ReadFile(fileSetPath)
+
+	if err != nil && !os.IsNotExist(err) { // It's only a "real" error if the fileset exists and we couldn't load it
+		log.Fatal(err)
+	} else {
+		fileSet, err = fileset.LoadGzJson(mdata)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	return fileSet
 }

@@ -4,9 +4,10 @@ import (
 	"flag"
 	"github.com/rakyll/globalconf"
 	"github.com/opslabjpl/goamz/aws"
-	"os"
 	"path"
+	"path/filepath"
 	"time"
+	"os/user"
 )
 
 var DOCKER_PATH = flag.String("docker_path", "/usr/bin/docker", "Path to the docker binary (usually /usr/bin/docker).")
@@ -48,8 +49,14 @@ func AWSAuth() (auth aws.Auth) {
 }
 
 func Load() {
-	homeDir := os.Getenv("HOME")
-	opts := globalconf.Options{Filename: homeDir + "/.earthkitrc"}
+	usr, err := user.Current()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	homeDir := usr.HomeDir
+
+	opts := globalconf.Options{Filename: filepath.Join(homeDir, ".earthkitrc")}
 	conf, err := globalconf.NewWithOptions(&opts)
 	if err != nil {
 		// Just parse command line arguments at the root level if the configuration file doesn't exist

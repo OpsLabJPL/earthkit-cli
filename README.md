@@ -22,3 +22,13 @@ Functions that have receivers should go into a file named after the receiver typ
     }
 
 
+###Installation
+* Install Go for your platform
+* set GOPATH, GOROOT, and PATH according to Go instructions for your platform
+* in $GOPATH/src, run: 
+    * go get github.com/OpsLabJPL/earthkit-cli
+    * cd github.com/OpsLabJPL/earthkit-cli
+    * go build
+* set up your $HOME/.earthkitrc file replacing your AWS key and secret with those for your own AWS account
+* you're ready to run! Run "earthkit-cli" to see the list of available commands and options.
+    

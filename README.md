@@ -32,3 +32,25 @@ Functions that have receivers should go into a file named after the receiver typ
 * set up your $HOME/.earthkitrc file replacing your AWS key and secret with those for your own AWS account
 * you're ready to run! Run "earthkit-cli" to see the list of available commands and options.
     
+###Usage
+####Working with dataset
+```
+earthkit-cli init workspace_name [dir]
+earthkit-cli push fileset_name [-c "some helpful comment"]
+earthkit-cli pull fileset_name [-p pattern1,pattern2,…,patternN]
+earthkit-cli clone workspace_name [fileset_name] [-p pattern1,pattern2,…,patternN]
+earhtkit-cli workspaces
+earthkit-cli filesets [workspace_name]
+```
+
+
+#### Cloud machines managements
+```
+earthkit-cli pool-create machine_type count
+earthkit-cli pool-list
+earthkit-cli pool-kill (all | machine_id)
+earthkit-cli pool-stop (all | machine_id)
+```
+
+#### Running jobs
+TODO
